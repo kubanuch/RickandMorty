@@ -11,7 +11,7 @@ import com.example.kotlin1lesson2.models.RickAndMortyCharacters
 class CharacterAdapter(val onItemClickListener: (model: RickAndMortyCharacters) -> Unit) :
     RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>() {
 
-    private var list: ArrayList<RickAndMortyCharacters> = ArrayList()
+    private var list: List<RickAndMortyCharacters> = ArrayList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -29,7 +29,7 @@ class CharacterAdapter(val onItemClickListener: (model: RickAndMortyCharacters) 
 
     @SuppressLint("NotifyDataSetChanged")
     fun setList(list: List<RickAndMortyCharacters>) {
-        this.list.addAll(list)
+        this.list = list
         notifyDataSetChanged()
     }
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.kotlin1lesson2.R
 import com.example.kotlin1lesson2.databinding.ActivityMainBinding
@@ -27,23 +28,16 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-        binding.bottomNavigation.itemIconTintList
         setupWithNavController(binding.bottomNavigation, navController)
     }
 
     private fun changeTitleToolbar() {
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.charactersFragment -> {
-                    binding.toolbarMain.title = getString(R.string.characters)
-                }
-                R.id.episodesFragment -> {
-                    binding.toolbarMain.title = getString(R.string.episodes)
-                }
-                R.id.locationsFragment -> {
-                    binding.toolbarMain.title = getString(R.string.locations)
-                }
-            }
-        }
+        val appBarConfiguration = AppBarConfiguration.Builder(
+            R.id.charactersFragment,
+            R.id.locationsFragment,
+            R.id.episodesFragment
+        ).build()
+        setupWithNavController(binding.bottomNavigation, navController)
+        setupWithNavController(binding.toolbarMain, navController, appBarConfiguration)
     }
 }

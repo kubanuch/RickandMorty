@@ -9,11 +9,11 @@ import com.example.kotlin1lesson2.models.RickAndMortyLocations
 
 class LocationAdapter : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>() {
 
-    private var list: ArrayList<RickAndMortyLocations> = ArrayList()
+    private var list: List<RickAndMortyLocations> = ArrayList()
 
     @SuppressLint("NotifyDataSetChanged")
     fun setList(list: ArrayList<RickAndMortyLocations>) {
-        this.list.addAll(list)
+        this.list = list
         notifyDataSetChanged()
     }
 

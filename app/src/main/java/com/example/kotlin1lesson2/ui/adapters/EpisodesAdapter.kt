@@ -9,7 +9,7 @@ import com.example.kotlin1lesson2.models.RickAndMortyEpisodes
 
 class EpisodesAdapter : RecyclerView.Adapter<EpisodesAdapter.EpisodesViewHolder>() {
 
-    private var list: ArrayList<RickAndMortyEpisodes> = ArrayList()
+    private var list: List<RickAndMortyEpisodes> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EpisodesViewHolder =
         EpisodesViewHolder(ItemEpisodesBinding.inflate(LayoutInflater.from(parent.context),
@@ -21,7 +21,7 @@ class EpisodesAdapter : RecyclerView.Adapter<EpisodesAdapter.EpisodesViewHolder>
 
     @SuppressLint("NotifyDataSetChanged")
     fun setList(list: ArrayList<RickAndMortyEpisodes>) {
-        this.list.addAll(list)
+        this.list = list
         notifyDataSetChanged()
     }
 

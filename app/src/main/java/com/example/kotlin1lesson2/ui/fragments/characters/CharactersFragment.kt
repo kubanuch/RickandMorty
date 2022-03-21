@@ -48,7 +48,6 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding, CharactersVie
     }
 
     private fun onItemClickListener(model: RickAndMortyCharacters) {
-        putName(model.name)
         putDescription(model.image)
         findNavController().navigate(R.id.detailFragment)
     }
