@@ -17,4 +17,12 @@ class CharacterRepository @Inject constructor(private val service: CharacterApiS
         }
     }
 
+    fun fetchCharacterID(id: Int) = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            emit(Resource.Success(service.fetchCharacterId(id)))
+        } catch (ioException: Exception) {
+            emit(Resource.Error(ioException.localizedMessage, null))
+        }
+    }
 }

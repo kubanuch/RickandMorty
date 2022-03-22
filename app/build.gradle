@@ -9,7 +9,7 @@ plugins {
     id 'com.google.dagger.hilt.android'
 
     //Navigation Safe Args
-    id("androidx.navigation.safeargs")
+    id 'androidx.navigation.safeargs'
 }
 
 android {

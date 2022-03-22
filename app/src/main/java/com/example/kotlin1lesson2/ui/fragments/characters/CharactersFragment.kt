@@ -2,16 +2,14 @@ package com.example.kotlin1lesson2.ui.fragments.characters
 
 
 import android.util.Log
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.kotlin1lesson2.R
 import com.example.kotlin1lesson2.base.BaseFragment
-import com.example.kotlin1lesson2.common.extensions.putDescription
-import com.example.kotlin1lesson2.common.extensions.putName
 import com.example.kotlin1lesson2.common.resource.Resource
 import com.example.kotlin1lesson2.databinding.FragmentCharactersBinding
-import com.example.kotlin1lesson2.models.RickAndMortyCharacters
 import com.example.kotlin1lesson2.ui.adapters.CharacterAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,7 +18,7 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding, CharactersVie
     R.layout.fragment_characters
 ) {
     override val binding by viewBinding(FragmentCharactersBinding::bind)
-    override val viewModel: CharactersViewModel by viewModels()
+    override val viewModel: CharactersViewModel by activityViewModels()
     private val characterAdapter = CharacterAdapter(this::onItemClickListener)
 
     override fun initialize() {
@@ -47,8 +45,9 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding, CharactersVie
         }
     }
 
-    private fun onItemClickListener(model: RickAndMortyCharacters) {
-        putDescription(model.image)
-        findNavController().navigate(R.id.detailFragment)
+    private fun onItemClickListener(id: Int) {
+        findNavController().navigate(
+            CharactersFragmentDirections.actionCharactersFragmentToDetailFragment(id)
+        )
     }
 }

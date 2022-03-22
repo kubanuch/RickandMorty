@@ -9,5 +9,8 @@ import javax.inject.Inject
 class CharactersViewModel @Inject constructor(
     private val repository: CharacterRepository,
 ) : BaseViewModel() {
+
     fun fetchCharacters() = repository.fetchCharacters()
+
+    fun fetchCharacterID(id: Int) = repository.fetchCharacterID(id)
 }

@@ -8,7 +8,7 @@ import com.example.kotlin1lesson2.common.extensions.setImage
 import com.example.kotlin1lesson2.databinding.ItemCharactersBinding
 import com.example.kotlin1lesson2.models.RickAndMortyCharacters
 
-class CharacterAdapter(val onItemClickListener: (model: RickAndMortyCharacters) -> Unit) :
+class CharacterAdapter(val onItemClickListener: (id: Int) -> Unit) :
     RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>() {
 
     private var list: List<RickAndMortyCharacters> = ArrayList()
@@ -36,16 +36,18 @@ class CharacterAdapter(val onItemClickListener: (model: RickAndMortyCharacters) 
     inner class CharacterViewHolder(private val binding: ItemCharactersBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        init {
+            binding.root.setOnClickListener {
+                 onItemClickListener(list[absoluteAdapterPosition].id)
+            }
+        }
 
         fun onBind(data: RickAndMortyCharacters) {
             binding.imageCharacter.setImage(data.image)
             binding.tvName.text = data.name
-            binding.root.setOnClickListener {
-                onItemClickListener(data)
-            }
-
+//            binding.root.setOnClickListener {
+//                onItemClickListener(absoluteAdapterPosition)
+//            }
         }
-
-
     }
 }

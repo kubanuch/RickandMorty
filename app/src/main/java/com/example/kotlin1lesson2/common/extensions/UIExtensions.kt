@@ -9,14 +9,3 @@ fun ImageView.setImage(url: String) =
         .load(url)
         .into(this)
 
-val name = MutableLiveData<String>()
-val image = MutableLiveData<String>()
-
-
-fun putName(text: String) {
-    name.value = text
-}
-
-fun putDescription(text: String) {
-    image.value = text
-}
