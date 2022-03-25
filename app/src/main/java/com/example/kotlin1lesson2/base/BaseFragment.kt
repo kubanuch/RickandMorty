@@ -21,20 +21,14 @@ abstract class BaseFragment<B : ViewBinding, V : BaseViewModel>(
         setupRequests()
         setupObserves()
     }
-
     open fun initialize() {
-
     }
-
     open fun setupViews() {
     }
-
     open fun setupListeners() {
     }
-
     open fun setupRequests() {
     }
-
     open fun setupObserves() {
     }
 

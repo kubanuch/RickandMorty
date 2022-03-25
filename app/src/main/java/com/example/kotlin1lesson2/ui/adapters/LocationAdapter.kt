@@ -1,21 +1,16 @@
 package com.example.kotlin1lesson2.ui.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kotlin1lesson2.base.BaseDiffUtil
 import com.example.kotlin1lesson2.databinding.ItemLocationsBinding
 import com.example.kotlin1lesson2.models.RickAndMortyLocations
 
-class LocationAdapter : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>() {
-
-    private var list: List<RickAndMortyLocations> = ArrayList()
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setList(list: ArrayList<RickAndMortyLocations>) {
-        this.list = list
-        notifyDataSetChanged()
-    }
+class LocationAdapter :
+    PagingDataAdapter<RickAndMortyLocations, LocationAdapter.LocationViewHolder>(
+        BaseDiffUtil()) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -26,12 +21,8 @@ class LocationAdapter : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>
             false))
 
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
-        holder.onBind(list[position])
+        getItem(position)?.let { holder.onBind(it) }
     }
-
-    override fun getItemCount(): Int = list.size
-
-
     class LocationViewHolder(private val binding: ItemLocationsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

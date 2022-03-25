@@ -9,15 +9,17 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/drawable/ic_report.xml" value="0.1395" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/drawable/ic_user_colored.xml" value="0.1395" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/drawable/ic_user_stroke.xml" value="0.1395" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/drawable/profile_photo.xml" value="0.1395" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/drawable/user_selecter.xml" value="0.1395" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/drawable/user_selector.xml" value="0.1395" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/layout/activity_main.xml" value="0.10400000000000001" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/layout/activity_main.xml" value="0.16" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/layout/fragment_characters.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/layout/fragment_detail.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/layout/fragment_episodes.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/layout/fragment_locations.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/layout/item_characters.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/layout/item_episodes.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/layout/item_loader.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/layout/item_locations.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2484375" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/kotlin1Lesson2/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1395" />

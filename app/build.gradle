@@ -10,6 +10,7 @@ plugins {
 
     //Navigation Safe Args
     id 'androidx.navigation.safeargs'
+
 }
 
 android {
@@ -91,5 +92,18 @@ dependencies {
 
     def view_biding_property_delegate = '1.5.3'
     // To use only without reflection variants of viewBinding
+    //noinspection GradleDependency
     implementation "com.github.kirich1409:viewbindingpropertydelegate-noreflection:$view_biding_property_delegate"
+
+
+    //Paging 3
+    def paging_version = "3.1.1"
+    implementation("androidx.paging:paging-runtime:$paging_version")
+    // alternatively - without Android dependencies for tests
+    testImplementation "androidx.paging:paging-common:$paging_version"
+
+    //ImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+
 }
