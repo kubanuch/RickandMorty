@@ -105,5 +105,13 @@ dependencies {
     //ImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    //Room
+    def roomVersion = "2.4.2"
+
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$roomVersion")
+
 
 }

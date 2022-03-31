@@ -1,26 +1,33 @@
 package com.example.kotlin1lesson2.data.repositories
 
-import androidx.lifecycle.liveData
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import com.example.kotlin1lesson2.common.resource.Resource
+import com.example.kotlin1lesson2.base.BaseRepository
+import com.example.kotlin1lesson2.data.local.db.daos.CharacterDao
 import com.example.kotlin1lesson2.data.remote.apiservices.CharacterApiService
-import com.example.kotlin1lesson2.data.remote.pagingsources.CharacterPagingSource
-import kotlinx.coroutines.Dispatchers
+import com.example.kotlin1lesson2.models.RickAndMortyCharacters
 import javax.inject.Inject
 
-class CharacterRepository @Inject constructor(private val service: CharacterApiService) {
+class CharacterRepository @Inject constructor(
+    private val service: CharacterApiService,
+    private val characterDao: CharacterDao
+) :
+    BaseRepository() {
 
-    fun fetchCharacters() = Pager(PagingConfig(pageSize = 40)) {
-        CharacterPagingSource(service)
-    }.flow
-
-    fun fetchCharacterID(id: Int) = liveData(Dispatchers.IO) {
-        emit(Resource.Loading())
-        try {
-            emit(Resource.Success(service.fetchCharacterId(id)))
-        } catch (ioException: Exception) {
-            emit(Resource.Error(ioException.localizedMessage, null))
-        }
+    fun fetchCharacters(page: Int) = doRequest {
+        service.fetchCharacters(page)
     }
+
+    fun fetchCharacterID(id: Int) = doRequest {
+        service.fetchCharacterId(id)
+
+    }
+
+    suspend fun insertCharacters(characters: List<RickAndMortyCharacters>) {
+        characterDao.insertAll(*characters.toTypedArray())
+    }
+
+    fun getCharacters() = doRequest {
+    characterDao.getAll()
+    }
+
 }
+
