@@ -1,5 +1,7 @@
 package com.example.kotlin1lesson2.ui.fragments.episodes
 
+import android.content.Context
+import android.net.ConnectivityManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,13 +24,13 @@ class EpisodesFragment : BaseFragment<FragmentEpisodesBinding, EpisodesViewModel
     override val viewModel: EpisodesViewModel by viewModels()
     private val episodesAdapter = EpisodesAdapter()
 
-
     override fun setupViews() {
         setupAdapter()
     }
 
     override fun setupObserves() {
         subscribeToEpisodes()
+        subscribeToEpisodesLocale()
     }
 
     private fun setupAdapter() = with(binding.recyclerviewEpisodes) {
@@ -37,7 +39,10 @@ class EpisodesFragment : BaseFragment<FragmentEpisodesBinding, EpisodesViewModel
         layoutManager = linearLayoutManager
 
         addOnScrollListener(object :
-            PaginationScrollListener(linearLayoutManager, { viewModel.fetchEpisodes() }) {
+            PaginationScrollListener(linearLayoutManager, {
+                if (isOnline()) viewModel.fetchEpisodes()
+                else null
+            }) {
             override fun isLoading() = viewModel.isLoading
         })
     }
@@ -45,9 +50,30 @@ class EpisodesFragment : BaseFragment<FragmentEpisodesBinding, EpisodesViewModel
     private fun subscribeToEpisodes() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.episodesState.observe(viewLifecycleOwner) {
+                episodesAdapter.submitData(it.result)
+            }
+        }
+    }
+
+    private fun subscribeToEpisodesLocale() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.episodesLocaleState.observe(viewLifecycleOwner) {
                 episodesAdapter.submitData(it)
             }
         }
+
+    }
+
+    override fun setupRequests() {
+        if (viewModel.episodesState.value == null && isOnline()) viewModel.fetchEpisodes()
+        else viewModel.getEpisodes()
+    }
+
+    fun isOnline(): Boolean {
+        val cm =
+            requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val netInfo = cm.activeNetworkInfo
+        return netInfo != null && netInfo.isConnectedOrConnecting
     }
 }
 

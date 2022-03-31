@@ -1,20 +1,18 @@
 package com.example.kotlin1lesson2.ui.fragments.characters
 
-import android.util.Log
+import android.content.Context.CONNECTIVITY_SERVICE
+import android.net.ConnectivityManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.kotlin1lesson2.R
 import com.example.kotlin1lesson2.base.BaseFragment
 import com.example.kotlin1lesson2.common.extensions.submitData
-import com.example.kotlin1lesson2.common.resource.Resource
 import com.example.kotlin1lesson2.databinding.FragmentCharactersBinding
 import com.example.kotlin1lesson2.ui.adapters.CharacterAdapter
 import com.example.kotlin1lesson2.utils.PaginationScrollListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CharactersFragment : BaseFragment<FragmentCharactersBinding, CharactersViewModel>(
@@ -27,51 +25,47 @@ class CharactersFragment : BaseFragment<FragmentCharactersBinding, CharactersVie
     override fun setupViews() {
         setupAdapter()
     }
-
     override fun setupObserves() {
         subscribeToCharacters()
         subscribeToCharactersLocale()
 
     }
 
-    private fun subscribeToCharactersLocale() {
-        lifecycleScope.launch {
-            viewModel.getCharacters().collect {
-                when (it) {
-                    is Resource.Loading -> {
-                        Log.e("че смотришь", " ")
-                    }
-                    is Resource.Error -> {
-                        Log.e(" ololo", it.message.toString())
-                    }
-                    is Resource.Success -> {
-                        it.data?.let {
-                            characterAdapter.submitData(it)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     private fun setupAdapter() = with(binding.recyclerviewCharacter) {
-        adapter = characterAdapter
-
         val linearLayoutManager = LinearLayoutManager(context)
         layoutManager = linearLayoutManager
+        adapter = characterAdapter
 
         addOnScrollListener(object :
-            PaginationScrollListener(linearLayoutManager, { viewModel.fetchCharacter() }) {
+            PaginationScrollListener(linearLayoutManager, {
+                if (isOnline()) viewModel.fetchCharacter() else null
+            }) {
             override fun isLoading() = viewModel.isLoading
         })
     }
 
     private fun subscribeToCharacters() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.characterState.observe(viewLifecycleOwner) {
-                characterAdapter.submitData(it)
-            }
+        viewModel.characterState.observe(viewLifecycleOwner) {
+            characterAdapter.submitData(it.result)
         }
+    }
+
+    private fun subscribeToCharactersLocale() {
+        viewModel.characterLocaleState.observe(viewLifecycleOwner) {
+            characterAdapter.submitData(it)
+
+        }
+    }
+
+    override fun setupRequests() {
+        if (viewModel.characterState.value == null && isOnline()) viewModel.fetchCharacter()
+        else viewModel.getCharacters()
+    }
+
+    fun isOnline(): Boolean {
+        val cm = requireActivity().getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val netInfo = cm.activeNetworkInfo
+        return netInfo != null && netInfo.isConnectedOrConnecting
     }
 
     private fun onItemClickListener(id: Int) {

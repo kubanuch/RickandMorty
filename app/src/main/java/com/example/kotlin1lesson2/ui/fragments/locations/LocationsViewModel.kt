@@ -1,15 +1,12 @@
 package com.example.kotlin1lesson2.ui.fragments.locations
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.example.kotlin1lesson2.base.BaseViewModel
-import com.example.kotlin1lesson2.common.resource.Resource
 import com.example.kotlin1lesson2.data.repositories.LocationsRepositories
 import com.example.kotlin1lesson2.models.RickAndMortyLocations
+import com.example.kotlin1lesson2.models.RickAndMortyResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,37 +14,23 @@ class LocationsViewModel @Inject constructor(
     private val repository: LocationsRepositories,
 ) : BaseViewModel() {
 
-    private var page = 0
+    private var page = 1
     var isLoading: Boolean = false
+    private val _locationsState = MutableLiveData<RickAndMortyResponse<RickAndMortyLocations>>()
+    val locationsState: LiveData<RickAndMortyResponse<RickAndMortyLocations>> = _locationsState
 
-    private val _locationState = MutableLiveData<ArrayList<RickAndMortyLocations>>()
-    val locationState: LiveData<ArrayList<RickAndMortyLocations>> = _locationState
+    private val _locationsLocaleState = MutableLiveData<List<RickAndMortyLocations>>()
+    val episodesLocaleState: LiveData<List<RickAndMortyLocations>> = _locationsLocaleState
 
-    fun fetchLocations() {
+    fun fetchLocation() {
         isLoading = true
-        viewModelScope.launch {
-            repository.fetchLocations(page).collect {
-                when (it) {
-                    is Resource.Loading -> {
-                        isLoading = true
-                    }
-                    is Resource.Error -> {
-                        Log.e("anime", it.message.toString())
-                    }
-                    is Resource.Success -> {
-                        isLoading = false
-                        _locationState.postValue(it.data?.result)
-                        page++
-
-                    }
-                }
-            }
+        repository.fetchLocations(page).collect(_locationsState) {
+            page++
+            isLoading = false
         }
     }
 
-    init {
-        if (_locationState.value == null) {
-            fetchLocations()
-        }
-    }
+    fun getLocation() = repository.getLocation().collect(_locationsLocaleState, null)
+
+
 }
