@@ -14,6 +14,6 @@ import com.example.kotlin1lesson2.models.RickAndMortyLocations
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun characterDao(): CharacterDao
-    abstract fun LocationDao(): LocationDao
-    abstract fun EpisodesDao(): EpisodesDao
+    abstract fun locationDao(): LocationDao
+    abstract fun episodesDao(): EpisodesDao
 }

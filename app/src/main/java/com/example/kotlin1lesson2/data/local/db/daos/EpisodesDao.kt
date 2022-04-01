@@ -10,7 +10,7 @@ import com.example.kotlin1lesson2.models.RickAndMortyEpisodes
 @Dao
 interface EpisodesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(vararg users: RickAndMortyEpisodes)
+    suspend fun insertAll(vararg episodes: RickAndMortyEpisodes)
 
     @Query("SELECT *FROM rickandmortyepisodes ")
     suspend fun getAll(): List<RickAndMortyEpisodes>

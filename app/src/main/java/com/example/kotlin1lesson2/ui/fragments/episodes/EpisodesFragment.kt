@@ -3,7 +3,6 @@ package com.example.kotlin1lesson2.ui.fragments.episodes
 import android.content.Context
 import android.net.ConnectivityManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.kotlin1lesson2.R
@@ -13,7 +12,6 @@ import com.example.kotlin1lesson2.databinding.FragmentEpisodesBinding
 import com.example.kotlin1lesson2.ui.adapters.EpisodesAdapter
 import com.example.kotlin1lesson2.utils.PaginationScrollListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class EpisodesFragment : BaseFragment<FragmentEpisodesBinding, EpisodesViewModel>(
@@ -48,20 +46,15 @@ class EpisodesFragment : BaseFragment<FragmentEpisodesBinding, EpisodesViewModel
     }
 
     private fun subscribeToEpisodes() {
-        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.episodesState.observe(viewLifecycleOwner) {
                 episodesAdapter.submitData(it.result)
-            }
         }
     }
 
     private fun subscribeToEpisodesLocale() {
-        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.episodesLocaleState.observe(viewLifecycleOwner) {
                 episodesAdapter.submitData(it)
-            }
         }
-
     }
 
     override fun setupRequests() {

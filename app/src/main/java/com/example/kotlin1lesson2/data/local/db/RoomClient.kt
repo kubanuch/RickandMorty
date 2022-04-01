@@ -17,8 +17,8 @@ class RoomClient {
         characterAppDatabase.characterDao()
 
     fun provideLocationDao(locationAppDatabase: AppDatabase): LocationDao =
-        locationAppDatabase.LocationDao()
+        locationAppDatabase.locationDao()
 
     fun provideEpisodesDao(episodesAppDatabase: AppDatabase): EpisodesDao =
-        episodesAppDatabase.EpisodesDao()
+        episodesAppDatabase.episodesDao()
 }
